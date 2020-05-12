@@ -5,6 +5,7 @@ import {switchMap} from "rxjs/operators";
 import {Post} from "../../shared/interfaces";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {AlertService} from "../shared/services/alert.service";
 
 @Component({
   selector: 'app-edit-page',
@@ -20,7 +21,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -51,9 +53,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
       title: this.form.value.title,
       text: this.form.value.text
     }).subscribe(response=>{
-
-      console.log(response);
       this.submitted = false;
+      this.alert.warning('Post updated');
     })
   }
 
